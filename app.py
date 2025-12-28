@@ -21,8 +21,14 @@ def load_expenses():
         st.success("Expenses loaded!")
 
 def save_expenses():
-    st.session_state.expenses.to_csv('expenses.csv', index=False)
-    st.success("Expenses saved successfully!")
+    csv = st.session_state.expenses.to_csv(index=False).encode('utf-8')
+    st.download_button(
+        label="⬇️ Download Expenses CSV",
+        data=csv,
+        file_name="expenses.csv",
+        mime="text/csv"
+    )
+
 
 def visualize_expenses():
     if not st.session_state.expenses.empty:
